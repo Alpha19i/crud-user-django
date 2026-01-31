@@ -1,13 +1,54 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>Users</h1>
+<h1>Usuários</h1>
 
-<ul>
-  {% for user in users %}
-    <li>{{ user.username }} - {{ user.email }}</li>
-  {% empty %}
-    <li>No users</li>
+{% if messages %}
+  {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">
+      {{ message }}
+    </div>
   {% endfor %}
-</ul>
+{% endif %}
+
+<a href="{% url 'users_create' %}">Novo Usuário</a>
+
+{% if users %}
+  <table>
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Email</th>
+        <th>Telefone</th>
+        <th>Data Nascimento</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for user in users %}
+        <tr>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ user.phone|default:"-" }}</td>
+          <td>{{ user.birth_date|date:"d/m/Y"|default:"-" }}</td>
+          <td>
+            {% if user.is_active %}
+              <span class="badge badge-success">Ativo</span>
+            {% else %}
+              <span class="badge badge-danger">Inativo</span>
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'users_detail' user.id %}">Ver</a>
+            <a href="{% url 'users_update' user.id %}">Editar</a>
+            <a href="{% url 'users_delete' user.id %}">Deletar</a>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>Nenhum usuário encontrado. <a href="{% url 'users_create' %}">Criar um novo</a></p>
+{% endif %}
 {% endblock %}

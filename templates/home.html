@@ -2,5 +2,19 @@
 
 {% block content %}
 <h1>Home</h1>
-<p>Django frontend is working</p>
+<p>Bem-vindo ao CRUD de Usuários - Django</p>
+
+<h2>Estatísticas</h2>
+<p><strong>Total de Usuários:</strong> {{ total_users }}</p>
+<p><strong>Usuários Ativos:</strong> {{ active_users }}</p>
+
+<h2>Funcionalidades</h2>
+<ul>
+  <li>Criar novos usuários</li>
+  <li>Visualizar todos os usuários</li>
+  <li>Ver detalhes de cada usuário</li>
+  <li>Editar informações</li>
+  <li>Deletar usuários</li>
+  <li>Gerenciar status ativo/inativo</li>
+</ul>
 {% endblock %}
